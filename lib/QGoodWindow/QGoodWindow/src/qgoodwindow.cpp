@@ -496,9 +496,10 @@ QGoodWindow::QGoodWindow(QWidget *parent, const QColor &clear_color) : QMainWind
     }
 
     if (!m_parent)
-        QMainWindow::setWindowFlags(Qt::Window);
+        // >qt6.8.0 need Qt::MaximizeUsingFullscreenGeometryHint
+        QMainWindow::setWindowFlags(Qt::Window | Qt::MaximizeUsingFullscreenGeometryHint);
     else
-        QMainWindow::setWindowFlags(Qt::Dialog);
+        QMainWindow::setWindowFlags(Qt::Dialog | Qt::MaximizeUsingFullscreenGeometryHint);
 #endif
 #ifdef QGOODWINDOW
     auto func_default_name_icon = [=]{
@@ -968,10 +969,6 @@ void QGoodWindow::setCentralWidget(QWidget *widget)
 
     m_central_widget = widget;
 #else
-#ifdef Q_OS_MAC //>qt6.8.0
-    this->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
-    widget->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
-#endif
     QMainWindow::setCentralWidget(widget);
 #endif
 }
