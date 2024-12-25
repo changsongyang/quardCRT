@@ -968,6 +968,10 @@ void QGoodWindow::setCentralWidget(QWidget *widget)
 
     m_central_widget = widget;
 #else
+#ifdef Q_OS_MAC //>qt6.8.0
+    this->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
+    widget->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
+#endif
     QMainWindow::setCentralWidget(widget);
 #endif
 }
